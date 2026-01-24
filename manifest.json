@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "GitHub Pitch Black Theme",
   "version": "1.0",
-  "description": "A pitch black theme for GitHub with neutral colors.",
+  "description": "A zero-latency, high-performance pitch black theme for GitHub with neutral colors. No JavaScript, no tracking, pure CSS.",
   "icons": {
     "48": "icons/icon48.png",
     "128": "icons/icon128.png",
