@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Pitch Black Theme",
+  "version": "1.0",
+  "description": "A pitch black theme for GitHub with neutral colors.",
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "css": ["theme.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

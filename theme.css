@@ -1,0 +1,123 @@
+/* GITHUB PITCH BLACK THEME */
+
+/* WRAPPER: Apply strictly to Dark Mode only */
+[data-color-mode="dark"],
+[data-color-mode="auto"][data-dark-theme*="dark"],
+[data-dark-theme*="dark"] {
+
+    /* --- VARIABLES --- */
+    
+    /* Core Backgrounds */
+    --bgColor-default: #000000 !important;
+    --bgColor-inset: #000000 !important;
+    --color-canvas-default: #000000 !important;
+    --color-canvas-inset: #000000 !important;
+    --canvas-default: #000000 !important;
+    --canvas-inset: #000000 !important;
+
+    /* Global Headers & Sidebars */
+    --page-header-bgColor: #000000 !important;
+    --header-bgColor: #000000 !important;
+    --dashboard-bgColor: #000000 !important;
+    --color-project-sidebar-bg: #000000 !important;
+    --color-project-header-bg: #000000 !important;
+
+    /* Lighter Front Elements */
+    --bgColor-muted: #0e0e0e !important;
+    --color-canvas-subtle: #0e0e0e !important;
+    --canvas-subtle: #0e0e0e !important;
+    --overlay-bgColor: #1c1c1c !important;
+    --tooltip-bgColor: #252525 !important;
+
+    /* Interactive Controls */
+    --button-default-bgColor-rest: #212121 !important;
+    --button-default-bgColor-hover: #303030 !important;
+    --button-default-bgColor-selected: #303030 !important;
+    --control-bgColor-rest: #161616 !important;
+    --control-bgColor-active: #202020 !important;
+    
+    /* Repo Counters */
+    --buttonCounter-default-bgColor-rest: #212121 !important; 
+    --buttonCounter-outline-bgColor-rest: #212121 !important; 
+    --buttonCounter-invisible-bgColor-rest: #212121 !important;
+    --buttonCounter-default-fgColor-rest: #cccccc !important;
+    --buttonCounter-outline-fgColor-rest: #cccccc !important;
+
+    /* Tracks */
+    --controlTrack-bgColor-rest: #222222 !important;
+    --progressBar-track-bgColor: #222222 !important;
+
+    /* Borders & Separators */
+    --borderColor-default: #333333 !important;
+    --border-default: 1px solid #333333 !important;
+    --borderColor-muted: #222222 !important;
+    --border-muted: 1px solid #222222 !important;
+    --header-borderColor-divider: #333333 !important;
+    --button-default-borderColor-rest: #383838 !important;
+    --button-default-borderColor-hover: #555555 !important;
+    --control-borderColor-rest: #383838 !important;
+    --button-inactive-bgColor: #111111 !important;
+    --bgColor-disabled: #111111 !important;
+
+    /* Text Colors */
+    --fgColor-default: #eeeeee !important;
+    --fgColor-muted: #999999 !important;
+    --fgColor-neutral: #777777 !important;
+    --color-fg-subtle: #777777 !important;
+
+    /* Code & Editors */
+    --codeMirror-bgColor: #000000 !important;
+    --codeMirror-gutters-bgColor: #000000 !important;
+    --codeMirror-lineNumber-fgColor: #444444 !important;
+
+    /* Specific UI Components */
+    --avatar-bgColor: rgba(255, 255, 255, 0.1) !important;
+    --avatar-borderColor: rgba(255, 255, 255, 0.1) !important;
+    --diffBlob-hunkLine-bgColor: #111111 !important;
+    --diffBlob-emptyLine-bgColor: #000000 !important;
+
+    /* --- COMPONENT OVERRIDES --- */
+
+    /* Tab & Dialog Navigation */
+    & button[role="tab"][aria-selected="true"],
+    & .UnderlineNav-item[aria-selected="true"],
+    & .tabnav-tab[aria-selected="true"] {
+        background-color: #1c1c1c !important;
+        border-bottom-color: #eeeeee !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+
+    & button[role="tab"][aria-selected="false"],
+    & .UnderlineNav-item[aria-selected="false"],
+    & .tabnav-tab[aria-selected="false"] {
+        background-color: transparent !important;
+        color: #888888 !important;
+        border-color: transparent !important;
+    }
+
+    & button[role="tab"][aria-selected="false"]:hover,
+    & .UnderlineNav-item[aria-selected="false"]:hover,
+    & .tabnav-tab[aria-selected="false"]:hover {
+        color: #cccccc !important;
+        background-color: #252525 !important;
+    }
+
+    /* Global Class Overrides */
+    & .Header, 
+    & .AppHeader { 
+        background-color: #000000 !important; 
+    }
+    
+    & .Box-header { 
+        background-color: #0e0e0e !important; 
+    }
+    
+    & .Box { 
+        background-color: #000000 !important; 
+    }
+    
+    & .react-tree-show-tree-items { 
+        background-color: #000000 !important; 
+    }
+}
