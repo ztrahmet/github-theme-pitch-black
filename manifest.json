@@ -3,6 +3,12 @@
   "name": "GitHub Pitch Black Theme",
   "version": "1.0",
   "description": "A pitch black theme for GitHub with neutral colors.",
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png",
+    "512": "icons/icon512.png"
+  },
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
