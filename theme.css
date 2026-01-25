@@ -53,6 +53,15 @@
   --control-bgColor-disabled: #111111 !important;
   --controlKnob-bgColor-rest: #000000 !important;
 
+  /* Segmented Controls & Transparent Buttons */
+  --control-transparent-bgColor-hover: #212121 !important;
+  --control-transparent-bgColor-active: #303030 !important;
+  --control-transparent-bgColor-selected: #212121 !important;
+  --controlTrack-bgColor-hover: #303030 !important;
+  --control-checked-bgColor-active: #303030 !important;
+  --control-checked-borderColor-active: #303030 !important;
+  --controlTrack-bgColor-active: #303030 !important;
+
   /* Repo Counters & Labels */
   --buttonCounter-default-bgColor-rest: #212121 !important;
   --buttonCounter-outline-bgColor-rest: #212121 !important;
