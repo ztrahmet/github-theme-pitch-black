@@ -26,7 +26,7 @@ Choose the method that works best for you.
 
 The easiest way to install and get automatic updates.
 
-**[🔗 Add to Chrome]()** _(Link coming soon)_
+**[🔗 Add to Chrome](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao)** _(Link coming soon)_
 
 ### Option 2: Manual Installation (Unpacked)
 
