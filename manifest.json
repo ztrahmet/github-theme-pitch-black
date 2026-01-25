@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GitHub Pitch Black Theme",
-  "version": "1.0",
+  "version": "1.1",
   "description": "A zero-latency, high-performance pitch black theme for GitHub with neutral colors. No JavaScript, no tracking, pure CSS.",
   "icons": {
     "48": "icons/icon48.png",
@@ -11,7 +11,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*"],
+      "matches": [
+        "https://github.com/*",
+        "https://gist.github.com/*"
+      ],
       "css": ["theme.css"],
       "run_at": "document_start"
     }
