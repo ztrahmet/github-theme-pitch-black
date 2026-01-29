@@ -1,8 +1,7 @@
 # GitHub Pitch Black Theme (Native)
 
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
-![Chrome](https://img.shields.io/badge/Chrome-supported-4285F4?logo=google-chrome&logoColor=white)
-![Brave](https://img.shields.io/badge/Brave-supported-FF1B2D?logo=brave&logoColor=white)
+![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?logo=chromewebstore&logoColor=white)
 
 A zero-latency, high-performance **Pitch Black** theme for GitHub.
 
@@ -26,7 +25,7 @@ Choose the method that works best for you.
 
 The easiest way to install and get automatic updates.
 
-**[🔗 Add to Chrome](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao)** _(Link coming soon)_
+**[🔗 Add to Chrome](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao)**
 
 ### Option 2: Manual Installation (Unpacked)
 
