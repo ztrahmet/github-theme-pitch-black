@@ -1,2 +1,4 @@
 *.zip
 *.crx
+node_modules/
+dist/
