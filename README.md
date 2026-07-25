@@ -1,83 +1,87 @@
-# GitHub Pitch Black Theme (Native)
+# GitHub Pitch Black Theme
 
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
-![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?logo=chromewebstore&logoColor=white)
+![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?logo=googlechrome&logoColor=white)
+![Firefox](https://img.shields.io/badge/Firefox_Add--ons-Available-FF7139?logo=firefoxbrowser&logoColor=white)
+![Safari](https://img.shields.io/badge/Safari_Extensions-Build_from_Source-000000?logo=safari&logoColor=white)
 
-A zero-latency, high-performance **Pitch Black** theme for GitHub.
+A zero-latency, native **Pitch Black** theme for GitHub.
 
-Unlike standard themes that rely on heavy style managers (like Stylus) or JavaScript injection, this is a **Native Local Extension**. It utilizes the browser's raw rendering engine to inject CSS at `document_start`, ensuring **0ms latency**, **0% CPU overhead**, and absolutely **no flash of unstyled content**.
+Unlike style managers or JavaScript-based themes, this is a native browser extension: pure CSS, injected at `document_start`. No flash of unstyled content, no runtime overhead, no JavaScript execution at all.
 
-![Screenshot](screenshot.png)
+![Screenshot](store-assets/screenshot.png)
 
-## 🚀 Features
+## Features
 
-- **True Pitch Black:** Replaces GitHub's default dark blue/gray tint (`#0d1117`) with pure `#000000`.
-- **Neutral Palette:** Desaturates borders, buttons, and text to neutral grays for a clean, distraction-free look.
-- **High Contrast UI:** Slightly lighter backgrounds (`#161616`) for inputs, dropdowns, and buttons to maintain visual hierarchy without breaking the void.
-- **Zero Latency:** Injected via the Chrome `content_scripts` API before the DOM is painted.
-- **Privacy First:** No JavaScript execution, no analytics, and no background processes.
+- **True Pitch Black** — replaces GitHub's default dark tint (`#0d1117`) with pure `#000000`
+- **Neutral Palette** — desaturated borders, buttons, and text for a clean, distraction-free look
+- **High Contrast UI** — lighter surfaces (`#161616`) for inputs, dropdowns, and buttons to preserve visual hierarchy
+- **Zero Latency** — pure CSS content script, applied before first paint
+- **Privacy First** — no JavaScript, no analytics, no network calls, no background processes
 
-## 🛠 Installation
+## Install
 
-Choose the method that works best for you.
+| Browser | Source |
+|---|---|
+| Chrome, Edge, Brave, Opera, Vivaldi, Arc | [Chrome Web Store](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao) |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/) *(Coming Soon)* |
+| Safari | [Build from source](#build-from-source) — not yet on the App Store |
 
-### Option 1: Chrome Web Store (Recommended)
-
-The easiest way to install and get automatic updates.
-
-**[🔗 Add to Chrome](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao)**
-
-### Option 2: Manual Installation (Unpacked)
-
-Best for developers who want maximum performance or wish to customize the CSS.
-
-1. **Download the Source:**
-
-- Clone this repository:
+### Build from source
 
 ```bash
 git clone https://github.com/ztrahmet/github-theme-pitch-black.git
+cd github-theme-pitch-black
+npm run build:chrome   # or build:firefox / build:safari / build:all
 ```
 
-2. **Load into Browser:**
+Each target is built independently from the same `src/` files into `dist/<browser>/`. Load it unpacked:
 
-- Open your browser's extension manager:
-  - **Chrome/Brave/Vivaldi:** `chrome://extensions`
-  - **Edge:** `edge://extensions`
-  - **Opera:** `opera://extensions`
+| Browser | Steps |
+|---|---|
+| Chrome / Edge / Brave / Opera / Vivaldi / Arc | `chrome://extensions` → enable **Developer mode** → **Load unpacked** → select `dist/chrome` |
+| Firefox | `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on** → select `dist/firefox/manifest.json` |
+| Safari | requires macOS + Xcode: `xcrun safari-web-extension-converter dist/safari`, then build/run the generated project from Xcode |
 
-- Enable **Developer mode** (toggle usually located in the top-right corner).
-- Click the **Load unpacked** button.
-- Select the folder containing `manifest.json` and `theme.css`.
+## Customization
 
-**That's it!** GitHub is now Pitch Black.
+1. Edit `src/css/theme.css` — the single source file shared by every browser build.
+2. Re-run the relevant `npm run build:*` command.
+3. Reload the extension from your browser's extension page and refresh GitHub.
 
-## ⚙️ Customization
+## Development
 
-If you installed using **Option 2 (Unpacked)**, you have full control over the styling without a build process.
+### Project structure
 
-1. Open `theme.css` in any text editor (VS Code, Notepad, etc.).
-2. Find the variable you want to change (e.g., `--fgColor-default` for text color).
-3. Save the file.
-4. Go back to your browser's extension page (`chrome://extensions`).
-5. Click the **Reload** (circular arrow) icon on the GitHub Pitch Black Theme card.
-6. Refresh GitHub to see changes instantly.
+```
+src/css/theme.css          single source of truth for the theme
+src/icons/                  shared icon set
+platforms/<browser>/        per-browser manifest.json (chrome, firefox, safari)
+scripts/build.mjs           assembles dist/<browser> from src/ + platforms/<browser>
+store-assets/               screenshots and store listing assets
+dist/                       build output (gitignored)
+```
 
-## 🧩 Compatibility
+### Commands
 
-- **Fully Supported:** Google Chrome, Microsoft Edge, Brave, Opera, Vivaldi, Arc.
-- **Firefox:** While the extension manifest is optimized for Chromium, Firefox users can achieve the same result by copying the contents of `theme.css` into their `userContent.css` file.
+| Command | Output |
+|---|---|
+| `npm run build:chrome` / `build:firefox` / `build:safari` / `build:all` | Unpacked build in `dist/<browser>/`, for local testing |
+| `npm run package:chrome` / `package:firefox` / `package:all` | Zipped store package in `dist/artifacts/<browser>/*.zip` |
+| `npm run lint:firefox` | Runs `web-ext lint` against the Firefox build (AMO validation) |
 
-## 🤝 Contributing
+Safari has no `package:safari` script — the Mac App Store requires a signed, notarized Xcode archive rather than a `.zip`, so packaging there is the `xcrun` step above followed by a submission through Xcode/App Store Connect.
 
-Found a UI element that is still blue or lacks contrast? Contributions are welcome!
+## Contributing
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/FixButtonColor`)
-3. Commit your Changes (`git commit -m 'Fix blue tint on submit button'`)
-4. Push to the Branch (`git push origin feature/FixButtonColor`)
-5. Open a Pull Request
+Found a UI element that's still blue or lacks contrast? Contributions are welcome.
 
-## 📄 License
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/fix-button-color`)
+3. Commit your changes
+4. Push to the branch
+5. Open a pull request
 
-Distributed under the MIT License. See `LICENSE` for more information.
+## License
+
+Distributed under the MIT License. See `LICENSE` for details.
