@@ -18,6 +18,7 @@
   --page-header-bgColor: #000000 !important;
   --header-bgColor: #000000 !important;
   --headerSearch-bgColor: #0e0e0e !important;
+  --headerSearch-borderColor: #222222 !important;
   --dashboard-bgColor: #000000 !important;
   --color-project-sidebar-bg: #000000 !important;
   --color-project-header-bg: #000000 !important;
@@ -33,6 +34,12 @@
   --card-bgColor: #0e0e0e !important;
   --tooltip-bgColor: #202020 !important;
 
+  /* Neutral Badges & Emphasis Surfaces */
+  --bgColor-emphasis: #303030 !important;
+  --bgColor-neutral-emphasis: #444444 !important;
+  --bgColor-neutral-muted: #44444433 !important;
+  --skeletonLoader-bgColor: #44444433 !important;
+
   /* Workflow & Activity Cards */
   --color-workflow-card-bg: #0e0e0e !important;
   --timelineBadge-bgColor: #0e0e0e !important;
@@ -47,8 +54,10 @@
   --button-default-bgColor-selected: #303030 !important;
   --button-default-bgColor-active: #202020 !important;
   --control-bgColor-rest: #161616 !important;
+  --control-bgColor-hover: #202020 !important;
   --control-bgColor-active: #202020 !important;
   --button-inactive-bgColor: #111111 !important;
+  --button-inactive-fgColor: #999999 !important;
   --bgColor-disabled: #111111 !important;
   --control-bgColor-disabled: #111111 !important;
   --controlKnob-bgColor-rest: #000000 !important;
@@ -69,6 +78,10 @@
   --buttonCounter-default-fgColor-rest: #cccccc !important;
   --buttonCounter-outline-fgColor-rest: #cccccc !important;
 
+  /* Keyboard Shortcut Hint Chips */
+  --buttonKeybindingHint-default-bgColor-rest: #1c1c1c !important;
+  --buttonKeybindingHint-inactive-bgColor: #1c1c1c !important;
+
   /* Marketing & Special Buttons (Settings/New Repo) */
   --color-mktg-btn-bg: #212121 !important;
   --color-mktg-btn-shadow-outline: transparent !important;
@@ -82,6 +95,14 @@
   --border-muted: 1px solid #222222 !important;
   --control-borderColor-rest: #383838 !important;
   --selectMenu-borderColor: #333333 !important;
+  --borderColor-emphasis: #444444 !important;
+  --borderColor-disabled: #4444441a !important;
+
+  /* Overlay Border Ring (box-shadow, not border-color) */
+  --shadow-floating-small: 0 0 0 1px #333333, 0 6px 12px -3px #01040966, 0 6px 18px 0 #01040966 !important;
+  --shadow-floating-medium: 0 0 0 1px #333333, 0 8px 16px -4px #01040966, 0 4px 32px -4px #01040966, 0 24px 48px -12px #01040966, 0 48px 96px -24px #01040966 !important;
+  --shadow-floating-large: 0 0 0 1px #333333, 0 24px 48px 0 #010409 !important;
+  --shadow-floating-xlarge: 0 0 0 1px #333333, 0 32px 64px 0 #010409 !important;
 
   /* Decorative/Tinted Borders -> Transparent */
   --header-borderColor-divider: transparent !important;
@@ -97,12 +118,24 @@
   --fgColor-neutral: #777777 !important;
   --color-fg-subtle: #777777 !important;
   --fgColor-onInverse: #000000 !important;
+  --fgColor-disabled: #777777 !important;
 
   /* --- CODE & EDITORS --- */
   --codeMirror-bgColor: #000000 !important;
   --codeMirror-gutters-bgColor: #000000 !important;
   --codeMirror-lineNumber-fgColor: #444444 !important;
   --codeMirror-cursor-fgColor: #eeeeee !important;
+
+  /* Syntax Highlighting */
+  --codeMirror-syntax-fgColor-comment: #777777 !important;
+  --color-prettylights-syntax-comment: #999999 !important;
+  --color-prettylights-syntax-brackethighlighter-angle: #999999 !important;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #303030 !important;
+
+  /* Ansi/Terminal Colors */
+  --color-ansi-black: #161616 !important;
+  --color-ansi-black-bright: #777777 !important;
+  --color-ansi-gray: #777777 !important;
 
   /* Diffs */
   --diffBlob-hunkLine-bgColor: #111111 !important;
@@ -123,6 +156,27 @@
   --avatar-bgColor: rgba(255, 255, 255, 0.1) !important;
   --avatar-borderColor: transparent !important;
   --avatar-shadow: none !important;
+  --avatarStack-fade-bgColor-default: #303030 !important;
+  --avatarStack-fade-bgColor-muted: #1c1c1c !important;
+
+  /* --- LABELS & TAGS (Gray Swatch) --- */
+  /* Issues/PRs/topics using the literal "gray" label color */
+  --data-gray-color-emphasis: #383838 !important;
+  --display-gray-bgColor-emphasis: #383838 !important;
+  --display-gray-borderColor-emphasis: #444444 !important;
+  --display-gray-borderColor-muted: #1c1c1c !important;
+  --display-gray-fgColor: #999999 !important;
+  --display-gray-scale-1: #1c1c1c !important;
+  --display-gray-scale-2: #252525 !important;
+  --display-gray-scale-3: #303030 !important;
+  --display-gray-scale-4: #383838 !important;
+  --display-gray-scale-5: #444444 !important;
+  --display-gray-scale-6: #999999 !important;
+  --display-gray-scale-7: #cccccc !important;
+  --label-gray-bgColor-active: #252525 !important;
+  --label-gray-bgColor-hover: #1c1c1c !important;
+  --label-gray-fgColor-hover: #cccccc !important;
+  --label-gray-fgColor-rest: #999999 !important;
 
   /* COMPONENT OVERRIDES (Nesting '&' is valid in modern Chrome) */
 
@@ -168,6 +222,15 @@
 
   & .react-tree-show-tree-items {
     background-color: #000000 !important;
+  }
+
+  /* Header Menu Buttons (hardcoded colors, bypass CSS variables entirely) */
+  & .HeaderMenu-button-muted-outline {
+    border-color: #333333 !important;
+  }
+
+  & .HeaderMenu-button-separator::before {
+    background-color: #333333 !important;
   }
 
   /* Light Mode Guard: If Auto + System Light, Unset All */
