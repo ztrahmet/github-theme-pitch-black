@@ -1,9 +1,9 @@
 # GitHub Pitch Black Theme
 
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
-![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?logo=googlechrome&logoColor=white)
-![Firefox](https://img.shields.io/badge/Firefox_Add--ons-Available-FF7139?logo=firefoxbrowser&logoColor=white)
-![Safari](https://img.shields.io/badge/Safari_Extensions-Build_from_Source-000000?logo=safari&logoColor=white)
+[![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao)
+[![Firefox](https://img.shields.io/badge/Firefox_Add--ons-Available-FF7139?logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/github-theme-pitch-black/)
+[![Safari](https://img.shields.io/badge/Safari_Extensions-Build_from_Source-000000?logo=safari&logoColor=white)](#build-from-source)
 
 A zero-latency, native **Pitch Black** theme for GitHub.
 
@@ -24,7 +24,7 @@ Unlike style managers or JavaScript-based themes, this is a native browser exten
 | Browser | Source |
 |---|---|
 | Chrome, Edge, Brave, Opera, Vivaldi, Arc | [Chrome Web Store](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao) |
-| Firefox | [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/) *(Coming Soon)* |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/github-theme-pitch-black/) |
 | Safari | [Build from source](#build-from-source) — not yet on the App Store |
 
 ### Build from source
