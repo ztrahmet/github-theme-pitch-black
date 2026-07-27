@@ -1,9 +1,15 @@
 /* GITHUB PITCH BLACK THEME */
 
+/*
+ * PALETTE SCALE — reuse these tiers, don't add one-off shades.
+ * Surfaces: #000 < #0e0e0e < #161616 < #1e1e1e < #262626 < #2e2e2e < #383838 < #444444
+ * Borders:  #2a2a2a (muted) < #505050 (default) < #5a5a5a (control) < #666666 (emphasis)
+ * Text:     #777777 < #999999 < #cccccc < #e4e4e4 < #ffffff
+ */
+
 /* WRAPPER: Apply strictly to Dark Mode only */
 [data-color-mode="dark"],
-[data-color-mode="auto"][data-dark-theme*="dark"],
-[data-dark-theme*="dark"] {
+[data-color-mode="auto"][data-dark-theme*="dark"] {
   /* --- CORE BACKGROUNDS --- */
   --bgColor-default: #000000 !important;
   --bgColor-inset: #000000 !important;
@@ -18,7 +24,7 @@
   --page-header-bgColor: #000000 !important;
   --header-bgColor: #000000 !important;
   --headerSearch-bgColor: #0e0e0e !important;
-  --headerSearch-borderColor: #222222 !important;
+  --headerSearch-borderColor: #2a2a2a !important;
   --dashboard-bgColor: #000000 !important;
   --color-project-sidebar-bg: #000000 !important;
   --color-project-header-bg: #000000 !important;
@@ -32,10 +38,10 @@
   --overlay-bgColor: #161616 !important;
   --overlay-backdrop-bgColor: rgba(0, 0, 0, 0.8) !important;
   --card-bgColor: #0e0e0e !important;
-  --tooltip-bgColor: #202020 !important;
+  --tooltip-bgColor: #2e2e2e !important;
 
   /* Neutral Badges & Emphasis Surfaces */
-  --bgColor-emphasis: #303030 !important;
+  --bgColor-emphasis: #444444 !important;
   --bgColor-neutral-emphasis: #444444 !important;
   --bgColor-neutral-muted: #44444433 !important;
   --skeletonLoader-bgColor: #44444433 !important;
@@ -49,60 +55,60 @@
   --bgColor-upsell-muted: #161616 !important;
 
   /* --- INTERACTIVE CONTROLS --- */
-  --button-default-bgColor-rest: #212121 !important;
-  --button-default-bgColor-hover: #303030 !important;
-  --button-default-bgColor-selected: #303030 !important;
-  --button-default-bgColor-active: #202020 !important;
+  --button-default-bgColor-rest: #383838 !important;
+  --button-default-bgColor-hover: #444444 !important;
+  --button-default-bgColor-selected: #444444 !important;
+  --button-default-bgColor-active: #2e2e2e !important;
   --control-bgColor-rest: #161616 !important;
-  --control-bgColor-hover: #202020 !important;
-  --control-bgColor-active: #202020 !important;
-  --button-inactive-bgColor: #111111 !important;
+  --control-bgColor-hover: #2e2e2e !important;
+  --control-bgColor-active: #2e2e2e !important;
+  --button-inactive-bgColor: #1e1e1e !important;
   --button-inactive-fgColor: #999999 !important;
-  --bgColor-disabled: #111111 !important;
-  --control-bgColor-disabled: #111111 !important;
+  --bgColor-disabled: #1e1e1e !important;
+  --control-bgColor-disabled: #1e1e1e !important;
   --controlKnob-bgColor-rest: #000000 !important;
 
   /* Segmented Controls & Transparent Buttons */
-  --control-transparent-bgColor-hover: #212121 !important;
-  --control-transparent-bgColor-active: #303030 !important;
-  --control-transparent-bgColor-selected: #212121 !important;
-  --controlTrack-bgColor-hover: #303030 !important;
-  --control-checked-bgColor-active: #303030 !important;
-  --control-checked-borderColor-active: #303030 !important;
-  --controlTrack-bgColor-active: #303030 !important;
+  --control-transparent-bgColor-hover: #383838 !important;
+  --control-transparent-bgColor-active: #444444 !important;
+  --control-transparent-bgColor-selected: #383838 !important;
+  --controlTrack-bgColor-hover: #444444 !important;
+  --control-checked-bgColor-active: #444444 !important;
+  --control-checked-borderColor-active: #444444 !important;
+  --controlTrack-bgColor-active: #444444 !important;
 
   /* Repo Counters & Labels */
-  --buttonCounter-default-bgColor-rest: #212121 !important;
-  --buttonCounter-outline-bgColor-rest: #212121 !important;
-  --buttonCounter-invisible-bgColor-rest: #212121 !important;
+  --buttonCounter-default-bgColor-rest: #383838 !important;
+  --buttonCounter-outline-bgColor-rest: #383838 !important;
+  --buttonCounter-invisible-bgColor-rest: #383838 !important;
   --buttonCounter-default-fgColor-rest: #cccccc !important;
   --buttonCounter-outline-fgColor-rest: #cccccc !important;
 
   /* Keyboard Shortcut Hint Chips */
-  --buttonKeybindingHint-default-bgColor-rest: #1c1c1c !important;
-  --buttonKeybindingHint-inactive-bgColor: #1c1c1c !important;
+  --buttonKeybindingHint-default-bgColor-rest: #262626 !important;
+  --buttonKeybindingHint-inactive-bgColor: #262626 !important;
 
   /* Marketing & Special Buttons (Settings/New Repo) */
-  --color-mktg-btn-bg: #212121 !important;
+  --color-mktg-btn-bg: #383838 !important;
   --color-mktg-btn-shadow-outline: transparent !important;
   --color-mktg-btn-shadow-hover: transparent !important;
 
   /* --- BORDERS & SEPARATORS --- */
   /* Structural Borders */
-  --borderColor-default: #333333 !important;
-  --border-default: 1px solid #333333 !important;
-  --borderColor-muted: #222222 !important;
-  --border-muted: 1px solid #222222 !important;
-  --control-borderColor-rest: #383838 !important;
-  --selectMenu-borderColor: #333333 !important;
-  --borderColor-emphasis: #444444 !important;
-  --borderColor-disabled: #4444441a !important;
+  --borderColor-default: #505050 !important;
+  --border-default: 1px solid #505050 !important;
+  --borderColor-muted: #2a2a2a !important;
+  --border-muted: 1px solid #2a2a2a !important;
+  --control-borderColor-rest: #5a5a5a !important;
+  --selectMenu-borderColor: #505050 !important;
+  --borderColor-emphasis: #666666 !important;
+  --borderColor-disabled: #5050501a !important;
 
   /* Overlay Border Ring (box-shadow, not border-color) */
-  --shadow-floating-small: 0 0 0 1px #333333, 0 6px 12px -3px #01040966, 0 6px 18px 0 #01040966 !important;
-  --shadow-floating-medium: 0 0 0 1px #333333, 0 8px 16px -4px #01040966, 0 4px 32px -4px #01040966, 0 24px 48px -12px #01040966, 0 48px 96px -24px #01040966 !important;
-  --shadow-floating-large: 0 0 0 1px #333333, 0 24px 48px 0 #010409 !important;
-  --shadow-floating-xlarge: 0 0 0 1px #333333, 0 32px 64px 0 #010409 !important;
+  --shadow-floating-small: 0 0 0 1px #505050, 0 6px 12px -3px #01040966, 0 6px 18px 0 #01040966 !important;
+  --shadow-floating-medium: 0 0 0 1px #505050, 0 8px 16px -4px #01040966, 0 4px 32px -4px #01040966, 0 24px 48px -12px #01040966, 0 48px 96px -24px #01040966 !important;
+  --shadow-floating-large: 0 0 0 1px #505050, 0 24px 48px 0 #010409 !important;
+  --shadow-floating-xlarge: 0 0 0 1px #505050, 0 32px 64px 0 #010409 !important;
 
   /* Decorative/Tinted Borders -> Transparent */
   --header-borderColor-divider: transparent !important;
@@ -113,7 +119,7 @@
   --underlineNav-borderColor-hover: transparent !important;
 
   /* --- TEXT COLORS --- */
-  --fgColor-default: #eeeeee !important;
+  --fgColor-default: #e4e4e4 !important;
   --fgColor-muted: #999999 !important;
   --fgColor-neutral: #777777 !important;
   --color-fg-subtle: #777777 !important;
@@ -124,13 +130,13 @@
   --codeMirror-bgColor: #000000 !important;
   --codeMirror-gutters-bgColor: #000000 !important;
   --codeMirror-lineNumber-fgColor: #444444 !important;
-  --codeMirror-cursor-fgColor: #eeeeee !important;
+  --codeMirror-cursor-fgColor: #e4e4e4 !important;
 
   /* Syntax Highlighting */
   --codeMirror-syntax-fgColor-comment: #777777 !important;
   --color-prettylights-syntax-comment: #999999 !important;
   --color-prettylights-syntax-brackethighlighter-angle: #999999 !important;
-  --color-prettylights-syntax-sublimelinter-gutter-mark: #303030 !important;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #444444 !important;
 
   /* Ansi/Terminal Colors */
   --color-ansi-black: #161616 !important;
@@ -138,45 +144,190 @@
   --color-ansi-gray: #777777 !important;
 
   /* Diffs */
-  --diffBlob-hunkLine-bgColor: #111111 !important;
+  --diffBlob-hunkLine-bgColor: #0e0e0e !important;
   --diffBlob-emptyLine-bgColor: #000000 !important;
   --diffBlob-emptyNum-bgColor: #000000 !important;
   --diffBlob-hunkNum-bgColor-rest: #0e0e0e !important;
 
   /* --- DATA VISUALIZATION --- */
-  --controlTrack-bgColor-rest: #222222 !important;
-  --progressBar-track-bgColor: #222222 !important;
-  --controlTrack-borderColor-rest: #333333 !important;
+  --controlTrack-bgColor-rest: #2e2e2e !important;
+  --progressBar-track-bgColor: #2e2e2e !important;
+  --controlTrack-borderColor-rest: #505050 !important;
 
   /* Contribution Graph */
-  --contribution-default-bgColor-0: #1c1c1c !important;
+  --contribution-default-bgColor-0: #262626 !important;
   --contribution-default-borderColor-0: transparent !important;
 
   /* --- SPECIFIC UI COMPONENTS --- */
   --avatar-bgColor: rgba(255, 255, 255, 0.1) !important;
   --avatar-borderColor: transparent !important;
   --avatar-shadow: none !important;
-  --avatarStack-fade-bgColor-default: #303030 !important;
-  --avatarStack-fade-bgColor-muted: #1c1c1c !important;
+  --avatarStack-fade-bgColor-default: #444444 !important;
+  --avatarStack-fade-bgColor-muted: #262626 !important;
 
   /* --- LABELS & TAGS (Gray Swatch) --- */
   /* Issues/PRs/topics using the literal "gray" label color */
   --data-gray-color-emphasis: #383838 !important;
   --display-gray-bgColor-emphasis: #383838 !important;
-  --display-gray-borderColor-emphasis: #444444 !important;
-  --display-gray-borderColor-muted: #1c1c1c !important;
+  --display-gray-borderColor-emphasis: #666666 !important;
+  --display-gray-borderColor-muted: #262626 !important;
   --display-gray-fgColor: #999999 !important;
-  --display-gray-scale-1: #1c1c1c !important;
-  --display-gray-scale-2: #252525 !important;
-  --display-gray-scale-3: #303030 !important;
-  --display-gray-scale-4: #383838 !important;
-  --display-gray-scale-5: #444444 !important;
+  --display-gray-scale-1: #262626 !important;
+  --display-gray-scale-2: #2e2e2e !important;
+  --display-gray-scale-3: #383838 !important;
+  --display-gray-scale-4: #444444 !important;
+  --display-gray-scale-5: #666666 !important;
   --display-gray-scale-6: #999999 !important;
   --display-gray-scale-7: #cccccc !important;
-  --label-gray-bgColor-active: #252525 !important;
-  --label-gray-bgColor-hover: #1c1c1c !important;
+  --label-gray-bgColor-active: #2e2e2e !important;
+  --label-gray-bgColor-hover: #262626 !important;
   --label-gray-fgColor-hover: #cccccc !important;
   --label-gray-fgColor-rest: #999999 !important;
+
+  /* --- LEGACY PRIMER TOKENS (docs.github.com / gist.github.com) --- */
+  /* These pages run an older Primer CSS build with its own --color- prefixed
+     variable set instead of the newer scheme used above; both need covering
+     since both domains are in this extension's matches list. */
+
+  /* Backgrounds */
+  --color-action-list-item-default-active-bg: #262626 !important;
+  --color-action-list-item-default-hover-bg: #2e2e2e !important;
+  --color-action-list-item-default-selected-bg: #262626 !important;
+  --color-action-list-item-inline-divider: #2a2a2a !important;
+  --color-ansi-white: #cccccc !important;
+  --color-avatar-stack-fade: #444444 !important;
+  --color-avatar-stack-fade-more: #262626 !important;
+  --color-btn-bg: #383838 !important;
+  --color-btn-counter-bg: #444444 !important;
+  --color-btn-danger-disabled-bg: #1e1e1e !important;
+  --color-btn-hover-bg: #444444 !important;
+  --color-btn-inactive-bg: #383838 !important;
+  --color-btn-outline-disabled-bg: #1e1e1e !important;
+  --color-btn-outline-hover-bg: #444444 !important;
+  --color-btn-selected-bg: #262626 !important;
+  --color-canvas-overlay: #161616 !important;
+  --color-checks-ansi-black: #161616 !important;
+  --color-checks-ansi-black-bright: #777777 !important;
+  --color-checks-ansi-gray: #777777 !important;
+  --color-checks-ansi-white: #cccccc !important;
+  --color-checks-ansi-white-bright: #cccccc !important;
+  --color-checks-bg: #0e0e0e !important;
+  --color-checks-donut-neutral: #777777 !important;
+  --color-checks-dropdown-bg: #161616 !important;
+  --color-checks-input-bg: #161616 !important;
+  --color-checks-step-header-open-bg: #161616 !important;
+  --color-closed-emphasis: #666666 !important;
+  --color-codemirror-bg: #000000 !important;
+  --color-codemirror-gutters-bg: #000000 !important;
+  --color-codemirror-lines-bg: #000000 !important;
+  --color-codemirror-syntax-comment: #777777 !important;
+  --color-header-bg: #0e0e0e !important;
+  --color-header-divider: #2a2a2a !important;
+  --color-header-search-bg: #0e0e0e !important;
+  --color-menu-bg-active: #161616 !important;
+  --color-neutral-emphasis: #444444 !important;
+  --color-neutral-emphasis-plus: #444444 !important;
+  --color-page-header-bg: #000000 !important;
+  --color-prettylights-syntax-markup-bold: #999999 !important;
+  --color-prettylights-syntax-markup-italic: #999999 !important;
+  --color-prettylights-syntax-storage-modifier-import: #999999 !important;
+  --color-project-gradient-in: #161616 !important;
+  --color-scale-black: #000000 !important;
+  --color-scale-gray-1: #cccccc !important;
+  --color-scale-gray-2: #999999 !important;
+  --color-scale-gray-3: #999999 !important;
+  --color-scale-gray-4: #666666 !important;
+  --color-scale-gray-5: #505050 !important;
+  --color-scale-gray-6: #383838 !important;
+  --color-scale-gray-7: #262626 !important;
+  --color-scale-gray-8: #161616 !important;
+  --color-scale-gray-9: #0e0e0e !important;
+  --color-segmented-control-button-active-bg: #262626 !important;
+  --color-segmented-control-button-bg: #161616 !important;
+  --color-segmented-control-button-hover-bg: #444444 !important;
+  --color-sidenav-selected-bg: #161616 !important;
+  --color-switch-knob-bg: #000000 !important;
+  --color-switch-knob-checked-bg: #000000 !important;
+  --color-switch-knob-checked-disabled-bg: #1e1e1e !important;
+  --color-switch-knob-disabled-bg: #1e1e1e !important;
+  --color-switch-track-bg: #2e2e2e !important;
+  --color-switch-track-disabled-bg: #1e1e1e !important;
+  --color-timeline-badge-bg: #0e0e0e !important;
+  --color-tree-view-item-chevron-hover-bg: #2e2e2e !important;
+  --color-tree-view-item-directory-fill: #999999 !important;
+
+  /* Borders */
+  --color-action-list-item-default-active-border: #5a5a5a !important;
+  --color-action-list-item-default-hover-border: #5a5a5a !important;
+  --color-border-default: #505050 !important;
+  --color-border-muted: #2a2a2a !important;
+  --color-border-subtle: #2a2a2a !important;
+  --color-btn-active-border: #5a5a5a !important;
+  --color-btn-border: #5a5a5a !important;
+  --color-btn-hover-border: #5a5a5a !important;
+  --color-btn-outline-hover-border: #5a5a5a !important;
+  --color-btn-outline-selected-border: #5a5a5a !important;
+  --color-checks-dropdown-border: #505050 !important;
+  --color-checks-header-border: #505050 !important;
+  --color-control-border-color-emphasis: #666666 !important;
+  --color-header-search-border: #2a2a2a !important;
+  --color-segmented-control-button-selected-border: #5a5a5a !important;
+  --color-select-menu-backdrop-border: #505050 !important;
+  --color-switch-knob-border: #5a5a5a !important;
+
+  /* Text */
+  --color-action-list-item-danger-hover-text: #000000 !important;
+  --color-btn-danger-hover-icon: #000000 !important;
+  --color-btn-danger-hover-text: #000000 !important;
+  --color-btn-inactive-text: #999999 !important;
+  --color-btn-primary-icon: #000000 !important;
+  --color-btn-primary-text: #000000 !important;
+  --color-btn-text: #cccccc !important;
+  --color-checks-btn-hover-icon: #cccccc !important;
+  --color-checks-btn-icon: #999999 !important;
+  --color-checks-dropdown-btn-hover-text: #cccccc !important;
+  --color-checks-dropdown-hover-text: #cccccc !important;
+  --color-checks-dropdown-text: #cccccc !important;
+  --color-checks-gate-text: #999999 !important;
+  --color-checks-header-icon: #999999 !important;
+  --color-checks-header-label-open-text: #cccccc !important;
+  --color-checks-header-label-text: #999999 !important;
+  --color-checks-input-focus-text: #cccccc !important;
+  --color-checks-input-placeholder-text: #777777 !important;
+  --color-checks-input-text: #999999 !important;
+  --color-checks-line-dt-fm-text: #000000 !important;
+  --color-checks-line-num-text: #777777 !important;
+  --color-checks-line-text: #999999 !important;
+  --color-checks-line-timestamp-text: #777777 !important;
+  --color-checks-logline-error-num-text: #777777 !important;
+  --color-checks-logline-error-text: #999999 !important;
+  --color-checks-logline-num-text: #777777 !important;
+  --color-checks-logline-text: #999999 !important;
+  --color-checks-logline-warning-text: #999999 !important;
+  --color-checks-text-primary: #cccccc !important;
+  --color-checks-text-secondary: #999999 !important;
+  --color-closed-fg: #999999 !important;
+  --color-codemirror-cursor: #cccccc !important;
+  --color-codemirror-guttermarker-subtle-text: #777777 !important;
+  --color-codemirror-guttermarker-text: #000000 !important;
+  --color-codemirror-linenumber-text: #999999 !important;
+  --color-codemirror-matchingbracket-text: #cccccc !important;
+  --color-codemirror-text: #cccccc !important;
+  --color-diff-blob-addition-fg: #cccccc !important;
+  --color-diff-blob-addition-num-text: #cccccc !important;
+  --color-diff-blob-deletion-fg: #cccccc !important;
+  --color-diff-blob-deletion-num-text: #cccccc !important;
+  --color-diff-blob-expander-icon: #999999 !important;
+  --color-fg-default: #e4e4e4 !important;
+  --color-fg-muted: #999999 !important;
+  --color-fg-on-emphasis: #000000 !important;
+  --color-prettylights-syntax-markup-ignored-text: #cccccc !important;
+  --color-primer-fg-disabled: #777777 !important;
+  --color-switch-track-checked-disabled-fg: #000000 !important;
+  --color-switch-track-checked-fg: #000000 !important;
+  --color-switch-track-disabled-fg: #000000 !important;
+  --color-switch-track-fg: #999999 !important;
+  --color-underlinenav-icon: #777777 !important;
 
   /* COMPONENT OVERRIDES (Nesting '&' is valid in modern Chrome) */
 
@@ -184,8 +335,8 @@
   & button[role="tab"][aria-selected="true"],
   & .UnderlineNav-item[aria-selected="true"],
   & .tabnav-tab[aria-selected="true"] {
-    background-color: #1c1c1c !important;
-    border-bottom-color: #eeeeee !important;
+    background-color: #262626 !important;
+    border-bottom-color: #e4e4e4 !important;
     color: #ffffff !important;
     font-weight: 600 !important;
   }
@@ -202,7 +353,7 @@
   & .UnderlineNav-item[aria-selected="false"]:hover,
   & .tabnav-tab[aria-selected="false"]:hover {
     color: #cccccc !important;
-    background-color: #252525 !important;
+    background-color: #2e2e2e !important;
   }
 
   /* Global Class Hard-Overrides */
@@ -217,7 +368,7 @@
 
   & .Box {
     background-color: #000000 !important;
-    border-color: #333333 !important;
+    border-color: #505050 !important;
   }
 
   & .react-tree-show-tree-items {
@@ -226,11 +377,11 @@
 
   /* Header Menu Buttons (hardcoded colors, bypass CSS variables entirely) */
   & .HeaderMenu-button-muted-outline {
-    border-color: #333333 !important;
+    border-color: #505050 !important;
   }
 
   & .HeaderMenu-button-separator::before {
-    background-color: #333333 !important;
+    background-color: #505050 !important;
   }
 
   /* Light Mode Guard: If Auto + System Light, Unset All */
