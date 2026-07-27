@@ -1,6 +1,6 @@
 # GitHub Pitch Black Theme
 
-![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ztrahmet/github-theme-pitch-black)
 [![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Available-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/oipinkhefglinifinekdbanfmblfniao)
 [![Firefox](https://img.shields.io/badge/Firefox_Add--ons-Available-FF7139?logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/github-theme-pitch-black/)
 [![Safari](https://img.shields.io/badge/Safari_Extensions-Build_from_Source-000000?logo=safari&logoColor=white)](#build-from-source)
