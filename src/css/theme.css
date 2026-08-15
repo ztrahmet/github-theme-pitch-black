@@ -123,7 +123,7 @@
   --fgColor-muted: #999999 !important;
   --fgColor-neutral: #777777 !important;
   --color-fg-subtle: #777777 !important;
-  --fgColor-onInverse: #000000 !important;
+  --fgColor-onInverse: #cccccc !important;
   --fgColor-disabled: #777777 !important;
 
   /* --- CODE & EDITORS --- */
@@ -320,7 +320,7 @@
   --color-diff-blob-expander-icon: #999999 !important;
   --color-fg-default: #e4e4e4 !important;
   --color-fg-muted: #999999 !important;
-  --color-fg-on-emphasis: #000000 !important;
+  --color-fg-on-emphasis: #cccccc !important;
   --color-prettylights-syntax-markup-ignored-text: #cccccc !important;
   --color-primer-fg-disabled: #777777 !important;
   --color-switch-track-checked-disabled-fg: #000000 !important;
