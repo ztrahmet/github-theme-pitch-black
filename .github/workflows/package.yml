@@ -1,0 +1,58 @@
+name: Build & Package Extension
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    name: Build & Package (Nightly)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate & Lint Firefox Build
+        run: npm run lint:firefox
+
+      - name: Build & Package Extensions
+        run: npm run package:all
+
+      - name: Prepare Artifacts
+        id: prep
+        run: |
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+
+          mkdir -p dist/upload
+
+          cp dist/artifacts/chrome/*.zip "dist/upload/${REPO_NAME}_chrome_${SHORT_SHA}.zip"
+          cp dist/artifacts/firefox/*.zip "dist/upload/${REPO_NAME}_firefox_${SHORT_SHA}.zip"
+
+          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "repo_name=${REPO_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Chrome Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.prep.outputs.repo_name }}_chrome_${{ steps.prep.outputs.short_sha }}
+          path: dist/upload/*_chrome_*.zip
+          retention-days: 14
+
+      - name: Upload Firefox Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.prep.outputs.repo_name }}_firefox_${{ steps.prep.outputs.short_sha }}
+          path: dist/upload/*_firefox_*.zip
+          retention-days: 14
