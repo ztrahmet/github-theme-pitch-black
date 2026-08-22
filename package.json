@@ -5,6 +5,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "icons": "node scripts/icons.mjs",
     "build:chrome": "node scripts/build.mjs chrome",
     "build:firefox": "node scripts/build.mjs firefox",
     "build:safari": "node scripts/build.mjs safari",
@@ -13,5 +14,10 @@
     "package:chrome": "npm run build:chrome && npx --yes web-ext@latest build --source-dir=dist/chrome --artifacts-dir=dist/artifacts/chrome --overwrite-dest",
     "package:firefox": "npm run build:firefox && npx --yes web-ext@latest build --source-dir=dist/firefox --artifacts-dir=dist/artifacts/firefox --overwrite-dest",
     "package:all": "npm run package:chrome && npm run package:firefox"
+  },
+  "devDependencies": {
+    "lightningcss": "^1.33.0",
+    "sharp": "^0.35.3",
+    "svgo": "^4.0.2"
   }
 }

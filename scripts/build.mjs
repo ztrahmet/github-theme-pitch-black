@@ -2,12 +2,22 @@
 // Assembles dist/<browser> from src/ + platforms/<browser>/manifest.json.
 // Usage: node scripts/build.mjs <chrome|firefox|safari|all>
 
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { transform } from "lightningcss";
 
 const rootDir = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const browsers = ["chrome", "firefox", "safari"];
+
+/* Chrome rejects SVG icons, so it and Safari ship the PNGs that npm run icons
+   generates. Firefox scales one SVG instead. Only what a manifest declares is
+   copied, so nothing unused reaches the package. */
+const ICONS = {
+  chrome: ["icon16.png", "icon32.png", "icon48.png", "icon128.png"],
+  safari: ["icon16.png", "icon32.png", "icon48.png", "icon128.png"],
+  firefox: [["icon.min.svg", "icon.svg"]],
+};
 
 /* theme.css is authored against one wrapper selector, but the clauses need
    different gating, and CSS can't share a declaration block across a gated and
@@ -92,6 +102,56 @@ function expandThemeScope(css) {
   return out + rest;
 }
 
+/* Every custom property and its value, sorted but keeping duplicates, for
+   comparing the stylesheet before and after minification. Multiplicity matters:
+   the palette is emitted once per media state, so a whole dropped block would
+   otherwise hide behind its identical siblings. Values are normalised for the
+   rewrites lightningcss is allowed to make: shortened hex, dropped quotes. */
+function declarations(css) {
+  return [...css.matchAll(/(--[\w-]+)\s*:\s*([^;}]+)/g)]
+    .map(([, name, value]) => {
+      const normalised = value
+        .replace(/!important/g, "")
+        .replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3\b/gi, "#$1$2$3")
+        .replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3([0-9a-f])\4\b/gi, "#$1$2$3$4")
+        .replace(/\btransparent\b/g, "#0000")
+        .replace(/["']/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+      return `${name}:${normalised}`;
+    })
+    .sort();
+}
+
+/* Whitespace, comments and colour shortening only. No targets, so lightningcss
+   leaves the CSS nesting alone instead of flattening it for older browsers. */
+function minifyCss(css, browser) {
+  const { code } = transform({
+    filename: `${browser}/theme.css`,
+    code: Buffer.from(css),
+    minify: true,
+  });
+  const out = code.toString();
+
+  const before = declarations(css);
+  const after = declarations(out);
+  if (before.join("\n") === after.join("\n")) return out;
+
+  const tally = new Map();
+  for (const d of before) tally.set(d, (tally.get(d) ?? 0) + 1);
+  for (const d of after) tally.set(d, (tally.get(d) ?? 0) - 1);
+  const diff = [...tally]
+    .filter(([, n]) => n !== 0)
+    .map(([d, n]) => `${n > 0 ? "lost:  " : "gained:"} ${d}`);
+
+  throw new Error(
+    `minify changed ${diff.length} declarations in ${browser} ` +
+      `(${before.length} before, ${after.length} after).\n` +
+      diff.slice(0, 10).map((d) => `  ${d}`).join("\n")
+  );
+}
+
 function buildBrowser(browser) {
   if (!browsers.includes(browser)) {
     throw new Error(`Unknown browser "${browser}". Expected one of: ${browsers.join(", ")}`);
@@ -105,17 +165,23 @@ function buildBrowser(browser) {
 
   /* Normalised so the wrapper match works on CRLF checkouts (core.autocrlf). */
   const theme = readFileSync(path.join(rootDir, "src/css/theme.css"), "utf8").replaceAll("\r\n", "\n");
-  writeFileSync(path.join(outDir, "theme.css"), expandThemeScope(theme));
-  cpSync(path.join(rootDir, "src/icons"), path.join(outDir, "icons"), { recursive: true });
+  const expanded = expandThemeScope(theme);
+  const minified = minifyCss(expanded, browser);
+  writeFileSync(path.join(outDir, "theme.css"), minified);
+
+  mkdirSync(path.join(outDir, "icons"), { recursive: true });
+  for (const entry of ICONS[browser]) {
+    const [from, to] = Array.isArray(entry) ? entry : [entry, entry];
+    copyFileSync(path.join(rootDir, "src/icons", from), path.join(outDir, "icons", to));
+  }
 
   const manifestPath = path.join(rootDir, "platforms", browser, "manifest.json");
   const manifest = readFileSync(manifestPath, "utf8").replace("__VERSION__", version);
   writeFileSync(path.join(outDir, "manifest.json"), manifest);
 
-  // icon.svg is a store/source asset, not part of the shipped package.
-  rmSync(path.join(outDir, "icons", "icon.svg"), { force: true });
-
-  console.log(`Built dist/${browser} (v${version})`);
+  const saved = Math.round((1 - minified.length / expanded.length) * 100);
+  const css = `${expanded.length} -> ${minified.length} bytes (-${saved}%)`;
+  console.log(`Built dist/${browser} (v${version})  css ${css}`);
 
   if (browser === "safari") {
     console.log(
