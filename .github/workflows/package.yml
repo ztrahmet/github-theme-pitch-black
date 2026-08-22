@@ -22,6 +22,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
+
+      # The build minifies with lightningcss, so dependencies are required now.
+      # Icons are committed, so sharp and svgo are only needed for npm run icons.
+      - name: Install dependencies
+        run: npm ci
 
       - name: Validate & Lint Firefox Build
         run: npm run lint:firefox

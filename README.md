@@ -45,8 +45,8 @@ Each target is built independently from the same `src/` files into `dist/<browse
 
 ## Customization
 
-1. Edit `src/css/theme.css` — the single source file shared by every browser build.
-2. Re-run the relevant `npm run build:*` command.
+1. Edit `src/css/theme.css`, the single source file shared by every browser build.
+2. Run `npm install` once, then re-run the relevant `npm run build:*` command.
 3. Reload the extension from your browser's extension page and refresh GitHub.
 
 ## Development
@@ -55,7 +55,8 @@ Each target is built independently from the same `src/` files into `dist/<browse
 
 ```
 src/css/theme.css          single source of truth for the theme
-src/icons/                  shared icon set
+src/icons/icon.svg          icon artwork; everything else here is generated
+scripts/icons.mjs           regenerates the icon set from icon.svg
 platforms/<browser>/        per-browser manifest.json (chrome, firefox, safari)
 scripts/build.mjs           assembles dist/<browser> from src/ + platforms/<browser>
 store-assets/               screenshots and store listing assets
@@ -69,6 +70,7 @@ dist/                       build output (gitignored)
 | `npm run build:chrome` / `build:firefox` / `build:safari` / `build:all` | Unpacked build in `dist/<browser>/`, for local testing |
 | `npm run package:chrome` / `package:firefox` / `package:all` | Zipped store package in `dist/artifacts/<browser>/*.zip` |
 | `npm run lint:firefox` | Runs `web-ext lint` against the Firefox build (AMO validation) |
+| `npm run icons` | Regenerates `src/icons/*` from `icon.svg`; run after changing the artwork |
 
 Safari has no `package:safari` script — the Mac App Store requires a signed, notarized Xcode archive rather than a `.zip`, so packaging there is the `xcrun` step above followed by a submission through Xcode/App Store Connect.
 
