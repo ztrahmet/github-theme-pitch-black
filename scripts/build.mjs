@@ -9,6 +9,75 @@ import path from "node:path";
 const rootDir = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const browsers = ["chrome", "firefox", "safari"];
 
+/* theme.css is authored against one wrapper selector, but the clauses need
+   different gating, and CSS can't share a declaration block across a gated and
+   an ungated selector, so the build splits it rather than the source repeating.
+   Single mode uses the slot named by data-color-mode; auto mode uses the day
+   slot when the OS is light and the night slot when it is dark. Every slot can
+   hold a dark theme, so all four combinations need covering. */
+const SCOPES = [
+  {
+    media: null,
+    selectors: [
+      '[data-color-mode="light"][data-light-theme*="dark"]',
+      '[data-color-mode="dark"][data-dark-theme*="dark"]',
+    ],
+  },
+  {
+    media: "(prefers-color-scheme: light)",
+    selectors: ['[data-color-mode="auto"][data-light-theme*="dark"]'],
+  },
+  {
+    media: "(prefers-color-scheme: dark)",
+    selectors: ['[data-color-mode="auto"][data-dark-theme*="dark"]'],
+  },
+];
+const SCOPE_HEADER = `${SCOPES.flatMap((s) => s.selectors).join(",\n")} {`;
+
+// Index of the "}" closing the rule at openBrace. Skips comments.
+function findRuleEnd(css, openBrace) {
+  let depth = 0;
+  for (let i = openBrace; i < css.length; i += 1) {
+    if (css.startsWith("/*", i)) {
+      const end = css.indexOf("*/", i + 2);
+      if (end === -1) break;
+      i = end + 1;
+    } else if (css[i] === "{") {
+      depth += 1;
+    } else if (css[i] === "}" && (depth -= 1) === 0) {
+      return i;
+    }
+  }
+  throw new Error("theme.css: unbalanced braces in the wrapper rule.");
+}
+
+function expandThemeScope(css) {
+  const start = css.indexOf(SCOPE_HEADER);
+  if (start === -1) {
+    throw new Error(
+      `theme.css: wrapper selector not found. Expected:\n${SCOPE_HEADER}\n` +
+        "If it was renamed, update SCOPES in scripts/build.mjs."
+    );
+  }
+  if (css.includes(SCOPE_HEADER, start + 1)) {
+    throw new Error("theme.css: wrapper selector appears more than once; expected exactly one.");
+  }
+
+  const openBrace = start + SCOPE_HEADER.length - 1;
+  const closeBrace = findRuleEnd(css, openBrace);
+  const body = css.slice(openBrace + 1, closeBrace);
+
+  return (
+    css.slice(0, start) +
+    "/* Wrapper expanded by scripts/build.mjs — edit src/css/theme.css instead. */\n" +
+    SCOPES.map(({ selectors, media }) => {
+      const rule = `${selectors.join(",\n")} {${body}}\n`;
+      return media ? `@media ${media} {\n${rule}}\n` : rule;
+    }).join("\n") +
+    css.slice(closeBrace + 1)
+  );
+}
+
 function buildBrowser(browser) {
   if (!browsers.includes(browser)) {
     throw new Error(`Unknown browser "${browser}". Expected one of: ${browsers.join(", ")}`);
@@ -20,7 +89,8 @@ function buildBrowser(browser) {
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
 
-  cpSync(path.join(rootDir, "src/css/theme.css"), path.join(outDir, "theme.css"));
+  const theme = readFileSync(path.join(rootDir, "src/css/theme.css"), "utf8");
+  writeFileSync(path.join(outDir, "theme.css"), expandThemeScope(theme));
   cpSync(path.join(rootDir, "src/icons"), path.join(outDir, "icons"), { recursive: true });
 
   const manifestPath = path.join(rootDir, "platforms", browser, "manifest.json");
