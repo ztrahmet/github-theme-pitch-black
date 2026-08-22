@@ -9,7 +9,9 @@ A zero-latency, native **Pitch Black** theme for GitHub.
 
 Unlike style managers or JavaScript-based themes, this is a native browser extension: pure CSS, injected at `document_start`. No flash of unstyled content, no runtime overhead, no JavaScript execution at all.
 
-![Screenshot](store-assets/screenshot.png)
+<p align="center">
+  <img src="preview.svg" alt="Pitch Black preview" width="640">
+</p>
 
 ## Features
 
@@ -59,6 +61,7 @@ src/icons/icon.svg          icon artwork; everything else here is generated
 scripts/icons.mjs           regenerates the icon set from icon.svg
 platforms/<browser>/        per-browser manifest.json (chrome, firefox, safari)
 scripts/build.mjs           assembles dist/<browser> from src/ + platforms/<browser>
+preview.svg                 README preview, drawn from the palette
 store-assets/               screenshots and store listing assets
 dist/                       build output (gitignored)
 ```

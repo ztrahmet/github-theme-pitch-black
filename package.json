@@ -1,6 +1,6 @@
 {
   "name": "github-pitch-black-theme",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A zero-latency, high-performance pitch black theme for GitHub. Multi-browser web extension source.",
   "private": true,
   "license": "MIT",
