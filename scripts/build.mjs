@@ -15,24 +15,29 @@ const browsers = ["chrome", "firefox", "safari"];
    Single mode uses the slot named by data-color-mode; auto mode uses the day
    slot when the OS is light and the night slot when it is dark. Every slot can
    hold a dark theme, so all four combinations need covering. */
-const SCOPES = [
-  {
-    media: null,
-    selectors: [
-      '[data-color-mode="light"][data-light-theme*="dark"]',
-      '[data-color-mode="dark"][data-dark-theme*="dark"]',
-    ],
-  },
-  {
-    media: "(prefers-color-scheme: light)",
-    selectors: ['[data-color-mode="auto"][data-light-theme*="dark"]'],
-  },
-  {
-    media: "(prefers-color-scheme: dark)",
-    selectors: ['[data-color-mode="auto"][data-dark-theme*="dark"]'],
-  },
+const SLOTS = [
+  { media: null, pairs: [["light", "light"], ["dark", "dark"]] },
+  { media: "(prefers-color-scheme: light)", pairs: [["auto", "light"]] },
+  { media: "(prefers-color-scheme: dark)", pairs: [["auto", "dark"]] },
 ];
-const SCOPE_HEADER = `${SCOPES.flatMap((s) => s.selectors).join(",\n")} {`;
+
+/* theme.css carries two wrappers: the palette, and the high-contrast tier layered
+   on top of it for GitHub's *_high_contrast themes. Both need the same gating, so
+   both are generated from SLOTS with an extra attribute clause for the second. */
+const WRAPPERS = ["", "high_contrast"];
+
+const selectorFor = (mode, slot, extra) =>
+  `[data-color-mode="${mode}"][data-${slot}-theme*="dark"]` +
+  (extra ? `[data-${slot}-theme*="${extra}"]` : "");
+
+const scopesFor = (extra) =>
+  SLOTS.map(({ media, pairs }) => ({
+    media,
+    selectors: pairs.map(([mode, slot]) => selectorFor(mode, slot, extra)),
+  }));
+
+const headerFor = (extra) =>
+  `${scopesFor(extra).flatMap((s) => s.selectors).join(",\n")} {`;
 
 // Index of the "}" closing the rule at openBrace. Skips comments.
 function findRuleEnd(css, openBrace) {
@@ -52,30 +57,39 @@ function findRuleEnd(css, openBrace) {
 }
 
 function expandThemeScope(css) {
-  const start = css.indexOf(SCOPE_HEADER);
-  if (start === -1) {
-    throw new Error(
-      `theme.css: wrapper selector not found. Expected:\n${SCOPE_HEADER}\n` +
-        "If it was renamed, update SCOPES in scripts/build.mjs."
-    );
-  }
-  if (css.includes(SCOPE_HEADER, start + 1)) {
-    throw new Error("theme.css: wrapper selector appears more than once; expected exactly one.");
+  let out = "";
+  let rest = css;
+
+  for (const extra of WRAPPERS) {
+    const header = headerFor(extra);
+    const start = rest.indexOf(header);
+    if (start === -1) {
+      throw new Error(
+        `theme.css: wrapper selector not found. Expected:\n${header}\n` +
+          "If it was renamed, update SLOTS/WRAPPERS in scripts/build.mjs."
+      );
+    }
+    if (rest.includes(header, start + 1)) {
+      throw new Error(`theme.css: wrapper "${extra || "palette"}" appears more than once.`);
+    }
+
+    const openBrace = start + header.length - 1;
+    const closeBrace = findRuleEnd(rest, openBrace);
+    const body = rest.slice(openBrace + 1, closeBrace);
+
+    out +=
+      rest.slice(0, start) +
+      (out ? "" : "/* Wrapper expanded by scripts/build.mjs — edit src/css/theme.css instead. */\n") +
+      scopesFor(extra)
+        .map(({ selectors, media }) => {
+          const rule = `${selectors.join(",\n")} {${body}}\n`;
+          return media ? `@media ${media} {\n${rule}}\n` : rule;
+        })
+        .join("\n");
+    rest = rest.slice(closeBrace + 1);
   }
 
-  const openBrace = start + SCOPE_HEADER.length - 1;
-  const closeBrace = findRuleEnd(css, openBrace);
-  const body = css.slice(openBrace + 1, closeBrace);
-
-  return (
-    css.slice(0, start) +
-    "/* Wrapper expanded by scripts/build.mjs — edit src/css/theme.css instead. */\n" +
-    SCOPES.map(({ selectors, media }) => {
-      const rule = `${selectors.join(",\n")} {${body}}\n`;
-      return media ? `@media ${media} {\n${rule}}\n` : rule;
-    }).join("\n") +
-    css.slice(closeBrace + 1)
-  );
+  return out + rest;
 }
 
 function buildBrowser(browser) {
