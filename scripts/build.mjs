@@ -103,7 +103,8 @@ function buildBrowser(browser) {
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
 
-  const theme = readFileSync(path.join(rootDir, "src/css/theme.css"), "utf8");
+  /* Normalised so the wrapper match works on CRLF checkouts (core.autocrlf). */
+  const theme = readFileSync(path.join(rootDir, "src/css/theme.css"), "utf8").replaceAll("\r\n", "\n");
   writeFileSync(path.join(outDir, "theme.css"), expandThemeScope(theme));
   cpSync(path.join(rootDir, "src/icons"), path.join(outDir, "icons"), { recursive: true });
 
