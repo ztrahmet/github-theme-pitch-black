@@ -7,8 +7,12 @@
  * Text:     #777777 < #999999 < #cccccc < #e4e4e4 < #ffffff
  */
 
-/* WRAPPER: Apply strictly to Dark Mode only */
-[data-color-mode="dark"],
+/* WRAPPER: applies wherever GitHub renders a dark theme, i.e. the active theme
+   slot holds one. scripts/build.mjs expands these clauses into one rule per
+   media state; in auto mode the OS decides which slot is active. */
+[data-color-mode="light"][data-light-theme*="dark"],
+[data-color-mode="dark"][data-dark-theme*="dark"],
+[data-color-mode="auto"][data-light-theme*="dark"],
 [data-color-mode="auto"][data-dark-theme*="dark"] {
   /* --- CORE BACKGROUNDS --- */
   --bgColor-default: #000000 !important;
@@ -382,28 +386,5 @@
 
   & .HeaderMenu-button-separator::before {
     background-color: #505050 !important;
-  }
-
-  /* Light Mode Guard: If Auto + System Light, Unset All */
-  @media (prefers-color-scheme: light) {
-    &[data-color-mode="auto"] {
-      --bgColor-default: unset !important;
-      --bgColor-inset: unset !important;
-      --page-header-bgColor: unset !important;
-      --header-bgColor: unset !important;
-      --dashboard-bgColor: unset !important;
-      .Header,
-      .AppHeader,
-      .Box,
-      .Box-header {
-        background-color: unset !important;
-      }
-      button[role="tab"],
-      .UnderlineNav-item,
-      .tabnav-tab {
-        background-color: unset !important;
-        color: unset !important;
-      }
-    }
   }
 }
