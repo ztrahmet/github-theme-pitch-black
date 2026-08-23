@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "GitHub Pitch Black Theme",
+    "description": "Extension name. Shown in the browser and in the stores. Chrome allows 75 characters."
+  },
+  "extDescription": {
+    "message": "OLED pitch black theme for GitHub with neutral colors. Pure CSS, zero latency, no tracking.",
+    "description": "Extension description. Shown in the browser and in the stores. Chrome allows 132 characters."
+  }
+}

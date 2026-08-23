@@ -2,7 +2,7 @@
 // Assembles dist/<browser> from src/ + platforms/<browser>/manifest.json.
 // Usage: node scripts/build.mjs <chrome|firefox|safari|all>
 
-import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { transform } from "lightningcss";
@@ -18,6 +18,25 @@ const ICONS = {
   safari: ["icon16.png", "icon32.png", "icon48.png", "icon128.png"],
   firefox: [["icon.min.svg", "icon.svg"]],
 };
+
+/* Chrome validates _locales directory names against its own supported list and
+   rejects anything outside it at upload, so that list is the shared baseline:
+   Firefox and Safari accept every code in it. Region variants Chrome already
+   resolves by fallback are left out (en_AU/en_GB/en_US -> en, es_419 -> es);
+   pt and zh ship both variants because Chrome has no bare code for either. */
+const DEFAULT_LOCALE = "en";
+const LOCALES = [
+  "am", "ar", "bg", "bn", "ca", "cs", "da", "de", "el", "en", "es", "et", "fa",
+  "fi", "fil", "fr", "gu", "he", "hi", "hr", "hu", "id", "it", "ja", "kn", "ko",
+  "lt", "lv", "ml", "mr", "ms", "nl", "no", "pl", "pt_BR", "pt_PT", "ro", "ru",
+  "sk", "sl", "sr", "sv", "sw", "ta", "te", "th", "tr", "uk", "vi", "zh_CN",
+  "zh_TW",
+];
+
+/* Chrome caps these manifest fields and only reports an overflow at upload,
+   which is far too late; the other stores are looser, so Chrome's limits bind.
+   Translations run longer than the English source, so this is worth checking. */
+const LIMITS = { extName: 75, extDescription: 132 };
 
 /* theme.css is authored against one wrapper selector, but the clauses need
    different gating, and CSS can't share a declaration block across a gated and
@@ -152,6 +171,79 @@ function minifyCss(css, browser) {
   );
 }
 
+function readMessages(locale) {
+  const file = path.join(rootDir, "src/_locales", locale, "messages.json");
+  let raw;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch {
+    throw new Error(`_locales/${locale}/messages.json is missing, but LOCALES lists "${locale}".`);
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    throw new Error(`_locales/${locale}/messages.json is not valid JSON: ${error.message}`);
+  }
+}
+
+/* A broken _locales tree makes the extension fail to load outright, and an
+   overlong string is only rejected once the store has it, so both are caught
+   here. The default locale defines the full key set; another locale may omit a
+   key and let the browser fall back for it, but may not invent one, and must
+   carry extDescription, which is the reason that locale ships at all. */
+function copyLocales(outDir) {
+  const present = readdirSync(path.join(rootDir, "src/_locales"), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
+  const unlisted = present.filter((locale) => !LOCALES.includes(locale));
+  if (unlisted.length) {
+    throw new Error(
+      `src/_locales holds directories LOCALES does not list: ${unlisted.join(", ")}.\n` +
+        "Chrome rejects locale codes outside its supported list, so add them to LOCALES deliberately."
+    );
+  }
+
+  const base = readMessages(DEFAULT_LOCALE);
+  for (const key of Object.keys(LIMITS)) {
+    if (!base[key]) throw new Error(`_locales/${DEFAULT_LOCALE}/messages.json is missing "${key}".`);
+  }
+
+  for (const locale of LOCALES) {
+    const messages = readMessages(locale);
+    if (!messages.extDescription) {
+      throw new Error(`_locales/${locale}/messages.json is missing "extDescription".`);
+    }
+
+    for (const [key, entry] of Object.entries(messages)) {
+      if (!(key in base)) {
+        throw new Error(
+          `_locales/${locale}/messages.json defines "${key}", which _locales/${DEFAULT_LOCALE} does not. ` +
+            "A message the default locale lacks has nothing to fall back to."
+        );
+      }
+      const message = entry?.message;
+      if (typeof message !== "string" || message.trim() === "") {
+        throw new Error(`_locales/${locale}/messages.json: "${key}" has no message string.`);
+      }
+      if (message.length > LIMITS[key]) {
+        throw new Error(
+          `_locales/${locale}/messages.json: "${key}" is ${message.length} characters, ` +
+            `over Chrome's limit of ${LIMITS[key]}.`
+        );
+      }
+    }
+
+    const dir = path.join(outDir, "_locales", locale);
+    mkdirSync(dir, { recursive: true });
+    copyFileSync(
+      path.join(rootDir, "src/_locales", locale, "messages.json"),
+      path.join(dir, "messages.json")
+    );
+  }
+
+  return LOCALES.length;
+}
+
 function buildBrowser(browser) {
   if (!browsers.includes(browser)) {
     throw new Error(`Unknown browser "${browser}". Expected one of: ${browsers.join(", ")}`);
@@ -175,13 +267,15 @@ function buildBrowser(browser) {
     copyFileSync(path.join(rootDir, "src/icons", from), path.join(outDir, "icons", to));
   }
 
+  const locales = copyLocales(outDir);
+
   const manifestPath = path.join(rootDir, "platforms", browser, "manifest.json");
   const manifest = readFileSync(manifestPath, "utf8").replace("__VERSION__", version);
   writeFileSync(path.join(outDir, "manifest.json"), manifest);
 
   const saved = Math.round((1 - minified.length / expanded.length) * 100);
   const css = `${expanded.length} -> ${minified.length} bytes (-${saved}%)`;
-  console.log(`Built dist/${browser} (v${version})  css ${css}`);
+  console.log(`Built dist/${browser} (v${version})  css ${css}  locales ${locales}`);
 
   if (browser === "safari") {
     console.log(
