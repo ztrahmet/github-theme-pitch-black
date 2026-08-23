@@ -1,0 +1,16 @@
+name: Something else
+description: A build or packaging problem, an idea, or a question.
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What is it
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything that helps
+      description: |
+        For a build problem: your OS, Node version, and the command output. For an idea: what you are trying to get to, not only the change you have in mind.

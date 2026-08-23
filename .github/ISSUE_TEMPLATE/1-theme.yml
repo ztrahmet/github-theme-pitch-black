@@ -1,0 +1,88 @@
+name: Unthemed or hard-to-read element
+description: Something on GitHub is still blue, washed out, or unreadable with the theme on.
+labels: ["theme"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The theme only applies when the active GitHub theme is a dark one. If the page looks completely untouched, check that first — the questions below cover it.
+
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Where you saw it. `docs.`, `gist.`, `support.` and `education.github.com` are themed too.
+      placeholder: https://github.com/owner/repo/pulls
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks wrong
+      description: Which element, and what you would expect instead.
+      placeholder: The merge button label is dark grey on a dark background, almost unreadable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Drag an image in. For a colour problem this is usually worth more than any description.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: github-theme
+    attributes:
+      label: GitHub theme
+      description: Settings → Appearance → Theme.
+      options:
+        - Dark default
+        - Dark dimmed
+        - Dark high contrast
+        - Dark Protanopia & Deuteranopia
+        - Dark Tritanopia
+        - A light theme
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: without-extension
+    attributes:
+      label: With the extension disabled, does the same element look correct?
+      description: If it looks wrong either way, it is GitHub's own styling rather than something this theme changed.
+      options:
+        - "Yes — it only looks wrong with the theme on"
+        - "No — it looks wrong either way"
+        - Did not check
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Edge
+        - Brave
+        - Opera
+        - Vivaldi
+        - Arc
+        - Firefox
+        - Safari
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Extension version
+      description: Shown on your browser's extensions page.
+      placeholder: "2.1.0"
+    validations:
+      required: true

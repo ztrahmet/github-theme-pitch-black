@@ -1,0 +1,43 @@
+name: Translation correction
+description: The extension's description reads wrong or unnatural in your language.
+labels: ["translation", "good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The translations were machine-written and only Turkish has been checked by a native speaker, so corrections are expected rather than exceptional.
+
+        A pull request is just as welcome and is often faster — it is one file, `src/_locales/<locale>/messages.json`.
+
+  - type: input
+    id: locale
+    attributes:
+      label: Locale code or language name
+      description: Either the directory name under `src/_locales/` — `de`, `pt_BR`, `zh_TW` — or simply the language, such as German or Brazilian Portuguese.
+      placeholder: de — or just German
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current text
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested text
+      description: |
+        Must stay under 132 characters — Chrome rejects anything longer.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: What is wrong with the current text
+      description: Grammar, an unnatural word, the wrong register, a term nobody actually uses.
+    validations:
+      required: true
