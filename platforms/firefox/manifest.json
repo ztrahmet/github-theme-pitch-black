@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "GitHub Pitch Black Theme",
+  "name": "__MSG_extName__",
   "version": "__VERSION__",
-  "description": "A zero-latency, high-performance pitch black theme for GitHub with neutral colors. No JavaScript, no tracking, pure CSS.",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
       "id": "github-pitch-black@ztrahmet.github.io",
