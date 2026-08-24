@@ -81,17 +81,17 @@ Safari has no `package:safari` script — the Mac App Store requires a signed, n
 
 ### Translations
 
-The theme itself is language-agnostic: every selector keys off structural attributes and Primer class names, never off visible text, so GitHub's UI language has no effect on it. What is translated is how the extension presents itself — its name and description in the browser's extension manager and in store search.
+Only the name and description are translated. The theme is language-agnostic — every selector keys off structural attributes and Primer class names, never visible text — so GitHub's UI language never affects it.
 
-Each locale is one file, `src/_locales/<locale>/messages.json`, defining `extName` and `extDescription`. The name is currently the same string everywhere, so localizing it later means changing a value rather than touching a manifest.
+Each locale is one file, `src/_locales/<locale>/messages.json`, defining `extName` and `extDescription`. `scripts/build.mjs` enforces what the stores require:
 
-Every locale repeats `extName` even though the value is identical. The browser would happily fall back to the default locale for a missing message, but the Chrome Web Store's upload validator requires every `__MSG_` key used in a listing field to be present in every locale and rejects the package otherwise. `web-ext lint` does not check this, so the build does.
+- **Chrome's supported locale list.** Chrome rejects codes outside it at upload; Firefox and Safari accept everything in it, so one list serves all three.
+- **Every locale defines every key**, including the identical `extName`. The browser would fall back to the default locale, but the Chrome Web Store rejects a package whose listing field is missing from any locale — and `web-ext lint` does not catch it.
+- **132 characters** per description, Chrome's cap, which several translations approach.
 
-The locale set is Chrome's supported list, which `scripts/build.mjs` enforces — Chrome rejects codes outside it at upload, while Firefox and Safari accept everything in it, so one list serves all three. The build also checks that no locale invents a key the default locale lacks, and that no string exceeds Chrome's field limits (132 characters for the description, which several translations approach).
+Translations are machine-written; only Turkish has been checked by a native speaker. **Corrections are the easiest way to contribute** — one file, and a complete pull request.
 
-**Corrections are welcome and are the easiest way to contribute.** The translations were machine-generated and reviewed for length and script conventions, not by native speakers. If a string reads awkwardly in your language, editing that one file is a complete pull request.
-
-On Safari, `_locales` covers the extension, but the containing app's display name is a separate Xcode-side localization (`InfoPlist.strings` / `CFBundleDisplayName`) handled during the `xcrun` step above.
+Safari's containing app takes its display name from `InfoPlist.strings` / `CFBundleDisplayName` instead, set during the `xcrun` step above.
 
 ## Contributing
 
