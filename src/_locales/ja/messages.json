@@ -1,4 +1,7 @@
 {
+  "extName": {
+    "message": "GitHub Pitch Black Theme"
+  },
   "extDescription": {
     "message": "GitHub 向け OLED 漆黒テーマ。ニュートラルな配色、CSS のみ、遅延ゼロ、トラッキングなし。"
   }

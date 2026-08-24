@@ -83,7 +83,9 @@ Safari has no `package:safari` script — the Mac App Store requires a signed, n
 
 The theme itself is language-agnostic: every selector keys off structural attributes and Primer class names, never off visible text, so GitHub's UI language has no effect on it. What is translated is how the extension presents itself — its name and description in the browser's extension manager and in store search.
 
-Each locale is one file, `src/_locales/<locale>/messages.json`, holding a single `extDescription` key. `_locales/en` additionally defines `extName`; every other locale falls back to it, so localizing the name later means adding a key, not touching a manifest.
+Each locale is one file, `src/_locales/<locale>/messages.json`, defining `extName` and `extDescription`. The name is currently the same string everywhere, so localizing it later means changing a value rather than touching a manifest.
+
+Every locale repeats `extName` even though the value is identical. The browser would happily fall back to the default locale for a missing message, but the Chrome Web Store's upload validator requires every `__MSG_` key used in a listing field to be present in every locale and rejects the package otherwise. `web-ext lint` does not check this, so the build does.
 
 The locale set is Chrome's supported list, which `scripts/build.mjs` enforces — Chrome rejects codes outside it at upload, while Firefox and Safari accept everything in it, so one list serves all three. The build also checks that no locale invents a key the default locale lacks, and that no string exceeds Chrome's field limits (132 characters for the description, which several translations approach).
 

@@ -1,4 +1,7 @@
 {
+  "extName": {
+    "message": "GitHub Pitch Black Theme"
+  },
   "extDescription": {
     "message": "سمة OLED سوداء لـ GitHub بألوان محايدة. CSS فقط، بدون تأخير، بدون تتبع."
   }

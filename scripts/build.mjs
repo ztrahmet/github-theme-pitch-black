@@ -188,9 +188,10 @@ function readMessages(locale) {
 
 /* A broken _locales tree makes the extension fail to load outright, and an
    overlong string is only rejected once the store has it, so both are caught
-   here. The default locale defines the full key set; another locale may omit a
-   key and let the browser fall back for it, but may not invent one, and must
-   carry extDescription, which is the reason that locale ships at all. */
+   here. Every locale must define exactly the keys the default locale defines:
+   the browser would fall back for a missing one, but the Chrome Web Store's
+   upload validator requires every __MSG_ key used in a listing field to be
+   present in every locale and rejects the package otherwise. */
 function copyLocales(outDir) {
   const present = readdirSync(path.join(rootDir, "src/_locales"), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -210,8 +211,14 @@ function copyLocales(outDir) {
 
   for (const locale of LOCALES) {
     const messages = readMessages(locale);
-    if (!messages.extDescription) {
-      throw new Error(`_locales/${locale}/messages.json is missing "extDescription".`);
+    for (const key of Object.keys(base)) {
+      if (!messages[key]) {
+        throw new Error(
+          `_locales/${locale}/messages.json is missing "${key}", which _locales/${DEFAULT_LOCALE} defines. ` +
+            "The Chrome Web Store rejects an upload where a listing field's message is absent from any locale, " +
+            "even one the browser would resolve by fallback."
+        );
+      }
     }
 
     for (const [key, entry] of Object.entries(messages)) {
