@@ -46,6 +46,10 @@ Each target is built independently from the same `src/` files into `dist/<browse
 | Firefox | `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on** → select `dist/firefox/manifest.json` |
 | Safari | requires macOS + Xcode: `xcrun safari-web-extension-converter dist/safari`, then build/run the generated project from Xcode |
 
+### Nightly builds
+
+Every push to `main` is packaged by [GitHub Actions](../../actions/workflows/package.yml). Downloading an artifact gives you a zip containing the extension's own zip — GitHub always wraps artifacts — so unzip twice, then load the inner one as above.
+
 ## Customization
 
 1. Edit `src/css/theme.css`, the single source file shared by every browser build.
